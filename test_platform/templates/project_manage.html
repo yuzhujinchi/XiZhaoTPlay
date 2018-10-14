@@ -78,71 +78,25 @@
                   <th>序号</th>
                   <th>项目名称</th>
                   <th>项目简介</th>
-                  <th>项目进度</th>
+                  <th>项目状态</th>
+                  <th>创建时间</th>
                   <th>操作</th>
                 </tr>
               </thead>
               <tbody>
+                {% for project in projects%}
                 <tr>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
+                  <td>{{project.id}}</td>
+                  <td>{{project.name}}</td>
+                  <td>{{project.description}}</td>
+                  <td>{{project.status}}</td>
+                  <td>{{project.created_at}}</td>
                   <td>
                     <button type="button" class="btn btn-primary btn-sm" href="/admin/">编辑</button>
                     <button type="button" class="btn btn-primary btn-sm">删除</button>
                   </td>
                 </tr>
-                <tr>
-                  <td>1,002</td>
-                  <td>amet</td>
-                  <td>consectetur</td>
-                  <td>adipiscing</td>
-                  <td>
-                    <button type="button" class="btn btn-primary btn-sm">编辑</button>
-                    <button type="button" class="btn btn-primary btn-sm">删除</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>Integer</td>
-                  <td>nec</td>
-                  <td>odio</td>
-                  <td>
-                    <button type="button" class="btn btn-primary btn-sm">编辑</button>
-                    <button type="button" class="btn btn-primary btn-sm">删除</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>libero</td>
-                  <td>Sed</td>
-                  <td>cursus</td>
-                  <td>
-                    <button type="button" class="btn btn-primary btn-sm">编辑</button>
-                    <button type="button" class="btn btn-primary btn-sm">删除</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1,004</td>
-                  <td>dapibus</td>
-                  <td>diam</td>
-                  <td>Sed</td>
-                  <td>
-                    <button type="button" class="btn btn-primary btn-sm">编辑</button>
-                    <button type="button" class="btn btn-primary btn-sm">删除</button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>1,005</td>
-                  <td>Nulla</td>
-                  <td>quis</td>
-                  <td>sem</td>
-                  <td>
-                    <button type="button" class="btn btn-primary btn-sm">编辑</button>
-                    <button type="button" class="btn btn-primary btn-sm">删除</button>
-                  </td>
-                </tr>
+              {% endfor %}
               </tbody>
             </table>
           </div>
