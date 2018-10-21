@@ -30,11 +30,11 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">项目管理<span class="sr-only">(current)</span></a></li>
-            <li><a href="#">模块管理</a></li>
+            <li class="active"><a href="/manage/project_manage/">项目管理<span class="sr-only">(current)</span></a></li>
+            <li><a href="/manage/module_manage/">模块管理</a></li>
           </ul>
           <ul class="nav nav-sidebar">
-            <li><a href="">用例管理</a></li>
+            <li><a href="/manage/testCase_manage/">用例管理</a></li>
             <li><a href="">任务管理</a></li>
           </ul>
           <ul class="nav nav-sidebar">
@@ -49,7 +49,7 @@
           <div class="sub-header">
             <h2 class="sub-header" align="left">项目列表
               <a type="button" class="btn btn-primary btn-sm" style="float: right"
-                 onclick="window.location.href='/project/create_project/'" >创建</a>
+                 onclick="window.location.href='/manage/create_project/'" >创建</a>
             </h2>
           </div>
           <script type="application/javascript">
@@ -78,10 +78,10 @@
                   <td>{{project.name}}</td>
                   <td>{{project.description}}</td>
                   <td>{{project.status}}</td>
-                  <td>{{project.created_at}}</td>
+                  <td>{{project.created_at| date:"Y-m-d H:i:s"}}</td>
                   <td>
-                    <a type="button" href="/project/edit_project/{{project.id}}" class="btn btn-primary btn-sm">编辑</a>
-                    <a type="button" href="/project/delete_project/{{project.id}}" class="btn btn-primary btn-sm" onclick="rec()">删除</a>
+                    <a type="button" href="/manage/edit_project/{{project.id}}" class="btn btn-primary btn-sm">编辑</a>
+                    <a type="button" href="/manage/delete_project/{{project.id}}" class="btn btn-primary btn-sm" onclick="rec()">删除</a>
                   </td>
                 </tr>
               {% endfor %}
@@ -98,10 +98,10 @@
             <h2 class="sub-header" align="left">创建项目</h2>
           </div>
           <div class="table-responsive">
-            <form action="/project/create_project/" method="post">
+            <form action="/manage/create_project/" method="post">
               {% csrf_token %}
               {{form.as_p}}
-              <a type="button" class="btn btn-primary btn-sm" onclick="window.location.href='/project/project_manage/'" >取消</a>
+              <a type="button" class="btn btn-primary btn-sm" onclick="window.location.href='/manage/project_manage/'" >取消</a>
               <input type="submit" class="btn btn-primary btn-sm">
             </form>
           </div>
@@ -117,7 +117,7 @@
             <form role="form" method="post">
               {% csrf_token %}
               {{form.as_p}}
-              <a type="button" class="btn btn-primary btn-sm" onclick="window.location.href='/project/project_manage/'" >取消</a>
+              <a type="button" class="btn btn-primary btn-sm" onclick="window.location.href='/manage/project_manage/'" >取消</a>
               <input type="submit" class="btn btn-primary btn-sm" >
             </form>
           </div>

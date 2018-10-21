@@ -22,7 +22,7 @@ def login_action(request):
             if user is not None:
                 auth.login(request, user)
                 request.session["user"] = username
-                return HttpResponseRedirect('/project/project_manage/')
+                return HttpResponseRedirect('/manage/project_manage/')
             else:
                 return HttpResponse(render(request, 'index.html', {"error": "用户名或密码错误！"}))
 

@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from project_app.models import Project
-from .forms import CreateProjectForm, EditProjectForm
+from project_app.forms import CreateProjectForm, EditProjectForm
 # Create your views here.
 
 
@@ -23,8 +23,9 @@ def create_project(request):
         if form.is_valid():
             name = form.cleaned_data["name"]
             description = form.cleaned_data["description"]
-            Project.objects.create(name=name, description=description)
-            return HttpResponseRedirect('/project/project_manage/')
+            status = form.cleaned_data["status"]
+            Project.objects.create(name=name, description=description, status=status)
+            return HttpResponseRedirect('/manage/project_manage/')
 
     else:
         form = CreateProjectForm()
@@ -43,7 +44,7 @@ def edit_project(request, pid):
             model.description = form.cleaned_data["description"]
             model.status = form.cleaned_data["status"]
             model.save()
-            return HttpResponseRedirect('/project/project_manage/')
+            return HttpResponseRedirect('/manage/project_manage/')
     else:
         if pid > 0 and isinstance(pid, int):
             form = EditProjectForm(
@@ -57,4 +58,4 @@ def edit_project(request, pid):
 @login_required()
 def delete_project(request, pid):
     Project.objects.get(id=pid).delete()
-    return HttpResponseRedirect('/project/project_manage/')
+    return HttpResponseRedirect('/manage/project_manage/')

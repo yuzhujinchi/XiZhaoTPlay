@@ -1,5 +1,5 @@
 from django import forms
-from .models import Project
+from .models import Project, Module
 
 # class ProjectForm(forms.Form):
 #     name = forms.CharField(label='项目名称', max_length=100)
@@ -17,4 +17,18 @@ class EditProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
+        exclude = ["created_at"]
+
+
+class CreateModuleForm(forms.ModelForm):
+
+    class Meta:
+        model = Module
+        exclude = ["created_at"]
+
+
+class EditModuleForm(forms.ModelForm):
+
+    class Meta:
+        model = Module
         exclude = ["created_at"]
