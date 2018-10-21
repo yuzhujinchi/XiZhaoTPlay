@@ -1,10 +1,129 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html'%}
 
-</body>
-</html>
+    {% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">惜朝TPlay</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a target="_blank" href="/admin/">Admin后台</a></li>
+            <li><a target="_blank" href="https://github.com/yuzhujinchi/XiZhaoTPlay">Git地址</a></li>
+            <li><a href="#">Hello, {{user}}</a></li>
+            <li><a href="/logout/">退出</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="搜索...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="/manage/project_manage/">项目管理<span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="/manage/module_manage/">模块管理</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="/manage/testCase_manage/">用例管理</a></li>
+            <li><a href="">任务管理</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">MockServer</a></li>
+            <li><a href="">SonarQube</a></li>
+            <li><a href="">测试工具</a></li>
+          </ul>
+        </div>
+
+        {% if type == "modules_list" %}
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <div class="sub-header">
+            <h2 class="sub-header" align="left">模块列表
+              <a type="button" class="btn btn-primary btn-sm" style="float: right"
+                 onclick="window.location.href='/manage/create_module/'" >创建</a>
+            </h2>
+          </div>
+          <script type="application/javascript">
+            function rec(){
+              if (!confirm("确认要删除模块吗？")){
+                window.event.returnValue=false;
+              }
+            }
+          </script>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>序号</th>
+                  <th>项目名称</th>
+                  <th>模块名称</th>
+                  <th>模块简介</th>
+                  <th>创建时间</th>
+                  <th>操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for module in modules%}
+                <tr>
+                  <td>{{module.id}}</td>
+                  <td>{{module.project}}</td>
+                  <td>{{module.name}}</td>
+                  <td>{{module.description}}</td>
+                  <td>{{module.created_at | date:"Y-m-d H:i:s"}}</td>
+                  <td>
+                    <a type="button" href="/manage/edit_module/{{module.id}}" class="btn btn-primary btn-sm">编辑</a>
+                    <a type="button" href="/manage/delete_module/{{module.id}}" class="btn btn-primary btn-sm" onclick="rec()">删除</a>
+                  </td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        {% endif %}
+      </div>
+
+      {% if type == "create" %}
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <div class="sub-header">
+            <h2 class="sub-header" align="left">创建模块</h2>
+          </div>
+          <div class="table-responsive">
+            <form action="/manage/create_module/" method="post">
+              {% csrf_token %}
+              {{form.as_p}}
+              <a type="button" class="btn btn-primary btn-sm" onclick="window.location.href='/manage/module_manage/'" >取消</a>
+              <input type="submit" class="btn btn-primary btn-sm">
+            </form>
+          </div>
+        </div>
+      {% endif %}
+
+      {% if type == "edit" %}
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <div class="sub-header">
+            <h2 class="sub-header" align="left">编辑模块</h2>
+          </div>
+          <div class="table-responsive">
+            <form role="form" method="post">
+              {% csrf_token %}
+              {{form.as_p}}
+              <a type="button" class="btn btn-primary btn-sm" onclick="window.location.href='/manage/module_manage/'" >取消</a>
+              <input type="submit" class="btn btn-primary btn-sm" >
+            </form>
+          </div>
+        </div>
+      {% endif %}
+
+    </div>
+
+  {% endblock %}
