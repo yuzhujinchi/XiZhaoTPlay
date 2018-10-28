@@ -35,6 +35,12 @@ class UserTestCase(TestCase):
         users = User.objects.all()
         self.assertEqual(len(users), 0)
 
+
+class UserLoginTestCase(TestCase):
+    def setUp(self):
+        User.objects.create_user(username="test01", email="test01@mail.com", password="test123456")
+        self.client = Client()
+
     def test_index(self):
         response = self.client.get('/')
         self.assertEqual(response.status_code, 200)
@@ -57,4 +63,15 @@ class UserTestCase(TestCase):
     def test_login_action_success(self):
         """用户名密码正确，登录成功"""
         response = self.client.post(path='/login/', data={"username": "test01", "password": "test123456"})
+        self.assertEqual(response.status_code, 302)
+
+
+class UserLogoutTestCase(TestCase):
+    def setUp(self):
+        User.objects.create_user(username="test01", email="test01@mail.com", password="test123456")
+        self.client = Client()
+        self.client.post(path='/login/', data={"username": "test01", "password": "test123456"})
+
+    def test_logout(self):
+        response = self.client.post(path='/logout/')
         self.assertEqual(response.status_code, 302)
