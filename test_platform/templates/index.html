@@ -9,9 +9,9 @@
         <input type="text" id="inputUsername" name="username" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
-          {{error}}<br>
+          <p id="errorMsg">{{error}}</p><br>
           {% csrf_token %}
-        <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+        <button class="btn btn-lg btn-primary btn-block" id="loginButton" type="submit">登录</button>
       </form>
 
     </div> <!-- /container -->

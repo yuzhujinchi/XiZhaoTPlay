@@ -48,7 +48,7 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <div class="sub-header">
             <h2 class="sub-header" align="left">模块列表
-              <a type="button" class="btn btn-primary btn-sm" style="float: right"
+              <a id="createButton" type="button" class="btn btn-primary btn-sm" style="float: right"
                  onclick="window.location.href='/manage/create_module/'" >创建</a>
             </h2>
           </div>
@@ -60,7 +60,7 @@
             }
           </script>
           <div class="table-responsive">
-            <table class="table table-striped">
+            <table id="moduleLists" class="table table-striped">
               <thead>
                 <tr>
                   <th>序号</th>
@@ -80,8 +80,8 @@
                   <td>{{module.description}}</td>
                   <td>{{module.created_at | date:"Y-m-d H:i:s"}}</td>
                   <td>
-                    <a type="button" href="/manage/edit_module/{{module.id}}" class="btn btn-primary btn-sm">编辑</a>
-                    <a type="button" href="/manage/delete_module/{{module.id}}" class="btn btn-primary btn-sm" onclick="rec()">删除</a>
+                    <a id="editButton" type="button" href="/manage/edit_module/{{module.id}}" class="btn btn-primary btn-sm">编辑</a>
+                    <a id="deleteButton" type="button" href="/manage/delete_module/{{module.id}}" class="btn btn-primary btn-sm" onclick="rec()">删除</a>
                   </td>
                 </tr>
               {% endfor %}
@@ -102,7 +102,7 @@
               {% csrf_token %}
               {{form.as_p}}
               <a type="button" class="btn btn-primary btn-sm" onclick="window.location.href='/manage/module_manage/'" >取消</a>
-              <input type="submit" class="btn btn-primary btn-sm">
+              <input id="createSubmitButton" type="submit" class="btn btn-primary btn-sm">
             </form>
           </div>
         </div>
@@ -118,7 +118,7 @@
               {% csrf_token %}
               {{form.as_p}}
               <a type="button" class="btn btn-primary btn-sm" onclick="window.location.href='/manage/module_manage/'" >取消</a>
-              <input type="submit" class="btn btn-primary btn-sm" >
+              <input id="editSubmitButton" type="submit" class="btn btn-primary btn-sm" >
             </form>
           </div>
         </div>
