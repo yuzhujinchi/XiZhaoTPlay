@@ -1,0 +1,148 @@
+{% extends 'case_manage.html'%}
+
+{% block api_debug %}
+
+    <fieldset>
+      <div id="legend" class="">
+        <legend class="">在线调试台</legend>
+      </div>
+
+        <div class="control-group">
+              <!-- Prepended text-->
+              <label class="control-label"></label>
+              <div class="controls">
+                <div class="input-prepend">
+                  <span class="add-on">名称：</span>
+                  <input class="span2" placeholder="name" id="reqName" type="text">
+                </div>
+                <p class="help-block"></p>
+              </div>
+
+        </div>
+
+        <div class="control-group">
+
+          <!-- Prepended text-->
+          <label class="control-label"></label>
+          <div class="controls">
+            <div class="input-prepend">
+              <span class="add-on">URL：</span>
+              <input class="span2" placeholder="url" id="reqUrl" type="text">
+            </div>
+            <p class="help-block"></p>
+          </div>
+        </div>
+
+        <div class="control-group">
+              <label class="control-label">请求方式：</label>
+              <div class="controls">
+                  <!-- Inline Radios -->
+                  <label class="radio-inline">
+                    <input type="radio" value="GET" name="reqMethod" >GET
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" value="POST" name="reqMethod" checked="checked">POST
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" value="PUT" name="reqMethod">PUT
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" value="DELETE" name="reqMethod">DELETE
+                  </label>
+            </div>
+        </div>
+
+        <div class="control-group">
+              <label class="control-label">参数类型：</label>
+              <div class="controls">
+                  <!-- Inline Radios -->
+                  <label class="radio-inline">
+                    <input type="radio" value="Form-Data" name="parmGroup">
+                    Form-Data
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" value="JSON" name="parmGroup" checked="checked">
+                    JSON
+                  </label>
+            </div>
+        </div>
+
+        <div class="control-group">
+
+              <!-- Prepended text-->
+              <label class="control-label"></label>
+              <div class="controls">
+                <div class="input-prepend">
+                  <span class="add-on">Header:</span>
+                  <input class="span2" id="parmHeader" type="text">
+                </div>
+                <p class="help-block">说明：以字典的方式设置参数，如：{"content-type": "application/json"}</p>
+              </div>
+
+        </div>
+
+        <div class="control-group">
+
+              <!-- Prepended text-->
+              <label class="control-label"></label>
+              <div class="controls">
+                <div class="input-prepend">
+                  <span class="add-on">Body：</span>
+                  <input class="span2" placeholder="" id="parmBody" type="text">
+                </div>
+                <p class="help-block">说明：以字典的方式设置参数，如{"id": 1, "name": "名称"}</p>
+              </div>
+
+        </div>
+
+        <div class="control-group">
+              <label class="control-label"></label>
+
+              <!-- Button -->
+              <div class="controls">
+                <button id="debugButton" class="btn btn-success" type="submit">调试</button>
+              </div>
+        </div>
+
+        <div class="control-group">
+
+              <!-- Textarea -->
+              <label class="control-label">返回结果：</label>
+              <div class="controls">
+                <div class="textarea">
+                      <textarea id="result"> </textarea>
+                </div>
+              </div>
+        </div>
+
+    </fieldset>
+
+    {% load static %}
+
+    <script src="{% static "js/jquery.min.js" %}"></script>
+    <script>
+            $(document).ready(function(){
+                $("#debugButton").click(function(){
+                    let name = $("#reqName").val();
+                    let req_url = $("#reqUrl").val();
+                    let req_method = $('input:radio[name="reqMethod"]:checked').val();
+                    let req_parameter = $("#parmBody").val();
+                    if (req_url === "") {
+                        window.alert("URL不能为空！");
+                    }else if (req_parameter === ""){
+                        req_parameter == "{}";
+                    }
+                    console.log(req_url, req_method, req_parameter)
+                    //发送一个post请求
+                    $.post("/interface/api_debug/", {
+                        "req_url": req_url,
+                        "req_method": req_method,
+                        "req_parameter": req_parameter
+                    }, function(result){
+                        $("#result").html(result)
+                    })
+                });
+            });
+    </script>
+
+{% endblock %}

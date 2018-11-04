@@ -1,6 +1,6 @@
 from django.urls import path
 
-from project_app.views import project_views, module_views, test_case_views
+from project_app.views import project_views, module_views
 
 urlpatterns = [
     # 项目管理
@@ -13,6 +13,4 @@ urlpatterns = [
     path('create_module/', module_views.create_module),
     path('edit_module/<int:mid>/', module_views.edit_module),
     path('delete_module/<int:mid>/', module_views.delete_module),
-    # 用例管理
-    path('testCase_manage/', test_case_views.test_case_manage),
 ]
