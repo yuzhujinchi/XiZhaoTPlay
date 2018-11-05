@@ -33,6 +33,7 @@
           </div>
         </div>
 
+        <br>
         <div class="control-group">
               <label class="control-label">请求方式：</label>
               <div class="controls">
@@ -52,16 +53,17 @@
             </div>
         </div>
 
+        <br>
         <div class="control-group">
               <label class="control-label">参数类型：</label>
               <div class="controls">
                   <!-- Inline Radios -->
                   <label class="radio-inline">
-                    <input type="radio" value="Form-Data" name="parmGroup">
+                    <input type="radio" value="Form-Data" name="parmType">
                     Form-Data
                   </label>
                   <label class="radio-inline">
-                    <input type="radio" value="JSON" name="parmGroup" checked="checked">
+                    <input type="radio" value="JSON" name="parmType" checked="checked">
                     JSON
                   </label>
             </div>
@@ -120,23 +122,30 @@
     {% load static %}
 
     <script src="{% static "js/jquery.min.js" %}"></script>
-    <script>
+    <script >
             $(document).ready(function(){
                 $("#debugButton").click(function(){
                     let name = $("#reqName").val();
                     let req_url = $("#reqUrl").val();
                     let req_method = $('input:radio[name="reqMethod"]:checked').val();
+                    let parm_type = $('input:radio[name="parmType"]:checked').val();
+                    let req_header = $("#parmHeader").val();
                     let req_parameter = $("#parmBody").val();
                     if (req_url === "") {
                         window.alert("URL不能为空！");
                     }else if (req_parameter === ""){
-                        req_parameter == "{}";
+                        req_parameter = "{}";
                     }
-                    console.log(req_url, req_method, req_parameter)
+                    if (req_header === ""){
+                        req_header = "{\"content-type\": \"application/json\" }"
+                    };
+                    console.log(req_url, req_method, req_parameter, parm_type)
                     //发送一个post请求
                     $.post("/interface/api_debug/", {
                         "req_url": req_url,
                         "req_method": req_method,
+                        "parm_type": parm_type,
+                        "req_header": req_header,
                         "req_parameter": req_parameter
                     }, function(result){
                         $("#result").html(result)

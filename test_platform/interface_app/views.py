@@ -37,10 +37,13 @@ def api_debug(request):
     if request.method == "POST":
         url = request.POST.get("req_url")
         method = request.POST.get("req_method")
+        # parm_type = request.POST.get("parm_type")
+        header = request.POST.get("req_header")
         parameter = request.POST.get("req_parameter")
 
         try:
             parameter_dict = json.loads(parameter.replace("'", "\""))
+            header_dict = json.loads(header.replace("'", "\""))
         except Exception as e:
             return HttpResponse("".format(e))
 
@@ -48,7 +51,7 @@ def api_debug(request):
         if method == "GET":
             r = requests.get(url, params=parameter_dict)
         if method == "POST":
-            r = requests.post(url, data=parameter_dict)
+            r = requests.post(url, data=parameter_dict, headers=header_dict)
 
         return HttpResponse(r.text)
 
